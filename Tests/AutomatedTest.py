@@ -14,3 +14,4 @@ for dir, subdir, files in os.walk(r"C:\your\path"):
             save_file = r"C:\your\path\{0}_descr".format(file)
             instance = DataAnalyzer(save_file, path, "Sheet1", "Date", "acct num", "MFG num", "Unit Price")
             instance.find_descr()
+

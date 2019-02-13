@@ -24,26 +24,40 @@ from ListAnalyzer import ListAnalyzer
 
 
 class DataAnalyzer:
-    def __init__(self, save_file, path, sheet, col_date, col_acct, col_part, col_price, col_extpr):
-        self.col_date = col_date
-        self.col_acct = col_acct
-        self.col_part = col_part
-        self.col_price = col_price
-        self.col_extpr = col_extpr
-
+    def __init__(self, save_file, path, sheet):
+        path = path.replace('\"', '')
+        path = path.replace("\\", "//")
         # set up excel sheet for uploading
         self.writer = pd.ExcelWriter(r"{0}.xlsx".format(save_file))
 
         # grab data
-        self.df = pd.read_excel(r"{0}".format(path), sheet_name=sheet)
+        if sheet == "":
+            self.df = pd.read_excel(path)
+        else:
+            self.df = pd.read_excel(path, sheet_name=sheet)
         print "got file: {0}".format(path)
 
-    def find_descr(self):
+    def read_col_titles(self):
+        self.header = list(self.df)
+        header = []
+        for name in self.header:
+            header.append(str(name))
+
+        return header
+
+    def find_descr(self, col_date, col_acct, col_part, col_price, col_extpr):
+        # determine column titles
+        col_date = self.header[int(col_date) - 1]
+        col_acct = self.header[int(col_acct) - 1]
+        col_part = self.header[int(col_part) - 1]
+        col_price = self.header[int(col_price) - 1]
+        col_extpr = self.header[int(col_extpr) - 1]
+
         # needs to happen because the indices must be in order when I filter them later
-        df2 = self.df.sort_values(by=[self.col_date], ascending=True)
+        df2 = self.df.sort_values(by=[col_date], ascending=True)
 
         # get list of all part numbers and cycle through it
-        acct_num = list(self.df[self.col_acct].unique())
+        acct_num = list(self.df[col_acct].unique())
 
         # make an empty DF to keep appending filtered data
         df_to_upload = pd.DataFrame()
@@ -51,15 +65,15 @@ class DataAnalyzer:
 
         # iterate through acct numbers, for each acct number iterate through the part numbers and filter by that part
         for acct in acct_num:
-            df3 = df2[df2[self.col_acct] == acct]
+            df3 = df2[df2[col_acct] == acct]
             # grab the list of unique part numbers per acct number to filter through
-            part_numbers = list(df3[self.col_part].unique())
+            part_numbers = list(df3[col_part].unique())
             for num in part_numbers:
-                df4 = df3[df3[self.col_part] == num]
-                df4 = df4[df4[self.col_extpr] > 0]
-                df4["Var with Min"] = df4[self.col_price] - df4[self.col_price].min()
-                df4["Deviation"] = df4[self.col_price] - df4[self.col_price].mean()
-                df4["Z Score"] = df4["Deviation"] / df4[self.col_price].std()
+                df4 = df3[df3[col_part] == num]
+                df4 = df4[df4[col_extpr] > 0]
+                df4["Var with Min"] = df4[col_price] - df4[col_price].min()
+                df4["Deviation"] = df4[col_price] - df4[col_price].mean()
+                df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
 
                 # need to reset index because this is the way I'm going to grab the range of values I need
                 df4 = df4.reset_index()
@@ -99,3 +113,7 @@ class DataAnalyzer:
         # df_to_upload = df_to_upload.sort_values(by=[self.col_acct, self.col_part, self.col_date], ascending=True)
         df_to_upload.to_excel(self.writer, "Sheet1")
         self.writer.save()
+
+#
+# inst = DataAnalyzer("balh", "C:\Users\Shane_Programming\Desktop\AutomatedTests\SheetGenerator\Sheet0.xlsx", "")
+# print inst.read_col_titles()
