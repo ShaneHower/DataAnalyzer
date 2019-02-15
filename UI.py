@@ -1,43 +1,53 @@
 """
-blue print for building a simple user interface so user doesn't have to hard code anything to use the scraper
+blue print for building a simple user interface
 """
 try:
-    import tkinter as tk  # for python 3
+    from tkinter import *  # for python 3
+    import tkinter.scrolledtext as tkst
 except:
-    import Tkinter as tk  # for python 2
+    from Tkinter import *  # for python 2
+    import ScrolledText as tkst
 from DataAnalyzer import DataAnalyzer
 
 
-class UserInterface(tk.Tk):
-    def __init__(self, pass_two = None):
-        tk.Tk.__init__(self)
-        self.entry = tk.Entry(self)
+class UserInterface(Tk):
+    def __init__(self, pass_two=None):
+        Tk.__init__(self)
+        self.entry = Entry(self)
         if pass_two:
             self.pass_two = True
         else:
             self.set_up()
 
-    def text(self, text):
-        txt_setup = tk.StringVar()
-        note = tk.Label(self, textvariable=txt_setup)
-        txt_setup.set(text)
-        note.pack()
+    def text(self, text, scroll=None):
+        if scroll:
+            inner_frame = Frame(self)
+            inner_frame.pack(fill='both', expand='yes')
+            scrollbar = tkst.ScrolledText(master=inner_frame, wrap='word', width=10, height=5)
+            scrollbar.pack(fill='both', expand=True, padx=8, pady=8)
+            scrollbar.insert('insert', text)
+
+        else:
+            txt_setup = StringVar()
+            note = Label(self, textvariable=txt_setup)
+            txt_setup.set(text)
+            note.pack()
 
     def input_box(self, label, password=None):
-        text = tk.StringVar()
-        descr = tk.Label(self, textvariable=text)
+        text = StringVar()
+        descr = Label(self, textvariable=text)
         text.set(label)
 
         # descr.grid(row=0, column=0, pady=5)
-        descr.pack(fill=tk.X, padx=5)
+        descr.pack(fill=X, padx=5)
 
         if password:
-            entry = tk.Entry(self, width=13, show="*")
+            entry = Entry(self, width=13, show="*")
         else:
-            entry = tk.Entry(self, width=13)
+            entry = Entry(self, width=13)
 
         # entry.grid(row=0, column=2, padx=10, pady=3)
-        entry.pack(fill=tk.X, padx=5, pady=10, expand=True)
+        entry.pack(fill=X, padx=5, pady=10, expand=True)
 
         return entry
 
@@ -53,19 +63,24 @@ class UserInterface(tk.Tk):
         self.sheet_name = self.input_box("Sheet Name (If applicable specify the excel sheet)")
         self.op_file_name = self.input_box("Save Directory (Path where you want to save the file)")
 
-        self.button_next = tk.Button(self, text="Next", command=self.on_next)
+        self.button_next = Button(self, text="Next", command=self.on_next)
         self.button_next.grid(row=0, column=1)
-        self.button_next.pack(side=tk.RIGHT)
+        self.button_next.pack(side=RIGHT)
 
     def set_up2(self, header):
         self.text(" ")
         count = 1
-        for num in header:
-            self.text("{0}.".format(count) + " " + num)
+        input_text = ""
+        for title in header:
+
+            new_txt = "{0}.".format(count)+ " " + title + "\n"
+            input_text = input_text + new_txt
+            # self.text("{0}.".format(count) + " " + num)
             count += 1
-        self.text("pick the column title that represents each variable below")
-        self.text("Input the numbered position (for example if you want the column title in the "
-                  "first position, input 1)")
+        self.text(input_text, scroll=True)
+        # self.text("pick the column title that represents each variable below")
+        # self.text("Input the numbered position (for example if you want the column title in the "
+        #           "first position, input 1)")
         self.text(" ")
 
         self.col_date = self.input_box("Date")
@@ -74,8 +89,9 @@ class UserInterface(tk.Tk):
         self.col_price = self.input_box("Unit Price")
         self.col_extprice = self.input_box("Extended Price")
 
-        self.enter = tk.Button(self, text="Enter", command=self.on_enter)
-        self.enter.pack(side=tk.RIGHT)
+
+        self.enter = Button(self, text="Enter", command=self.on_enter)
+        self.enter.pack(side=RIGHT)
 
     def on_next(self):
         self.inst = DataAnalyzer(self.op_file_name.get(), self.file_path.get(), self.sheet_name.get())
