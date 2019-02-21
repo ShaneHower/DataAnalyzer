@@ -38,7 +38,6 @@ class UserInterface(Tk):
         descr = Label(self, textvariable=text)
         text.set(label)
 
-        # descr.grid(row=0, column=0, pady=5)
         descr.pack(fill=X, padx=5)
 
         if password:
@@ -46,7 +45,6 @@ class UserInterface(Tk):
         else:
             entry = Entry(self, width=13)
 
-        # entry.grid(row=0, column=2, padx=10, pady=3)
         entry.pack(fill=X, padx=5, pady=10, expand=True)
 
         return entry
@@ -69,12 +67,9 @@ class UserInterface(Tk):
 
             new_txt = "{0}.".format(count)+ " " + title + "\n"
             input_text = input_text + new_txt
-            # self.text("{0}.".format(count) + " " + num)
             count += 1
+
         self.text(input_text, scroll=True)
-        # self.text("pick the column title that represents each variable below")
-        # self.text("Input the numbered position (for example if you want the column title in the "
-        #           "first position, input 1)")
         self.text(" ")
 
         self.col_date = self.input_box("Date")

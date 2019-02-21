@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37ea17b2-d13a-4d54-84ac-822244649040" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/DAMain.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,11 +24,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UI.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DAMain.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DAMain.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UI.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+            <state relative-caret-position="1632">
+              <caret line="96" selection-start-line="96" selection-end-line="96" />
             </state>
           </provider>
         </entry>
@@ -34,7 +45,7 @@
       <file leaf-file-name="DataAnalyzer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataAnalyzer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1006">
+            <state relative-caret-position="663">
               <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -73,10 +84,11 @@
         <option value="$PROJECT_DIR$/ListAnalyzer.py" />
         <option value="$PROJECT_DIR$/Tests/AutomatedTest.py" />
         <option value="$PROJECT_DIR$/UI.py" />
+        <option value="$PROJECT_DIR$/DAMain.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1382" />
@@ -147,7 +159,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DataAnalyzer">
+  <component name="RunManager" selected="Python.DAMain">
     <configuration name="AutomatedTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DataAnalyzer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -166,6 +178,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="DAMain" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="DataAnalyzer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DAMain.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="DataAnalyzer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DataAnalyzer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -179,24 +209,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataAnalyzer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="DateGenerator" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="DataAnalyzer" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DateGenerator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -241,17 +253,17 @@
     <list>
       <item itemvalue="Python.DataAnalyzer" />
       <item itemvalue="Python.SheetGenerator" />
-      <item itemvalue="Python.DateGenerator" />
       <item itemvalue="Python.AutomatedTest" />
       <item itemvalue="Python.ListAnalyzer" />
+      <item itemvalue="Python.DAMain" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.DAMain" />
         <item itemvalue="Python.DataAnalyzer" />
         <item itemvalue="Python.AutomatedTest" />
         <item itemvalue="Python.ListAnalyzer" />
         <item itemvalue="Python.SheetGenerator" />
-        <item itemvalue="Python.DateGenerator" />
       </list>
     </recent_temporary>
   </component>
@@ -427,13 +439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DAMain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataAnalyzer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
@@ -531,20 +536,20 @@
     <entry file="file://$PROJECT_DIR$/DateGenerator.py" />
     <entry file="file://$PROJECT_DIR$/SheetGenerator.py" />
     <entry file="file://$PROJECT_DIR$/AutomatedTest.py" />
-    <entry file="file://$PROJECT_DIR$/DataAnalyzer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1006">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tests/AutomatedTest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataAnalyzer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -557,8 +562,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+        <state relative-caret-position="1632">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DAMain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
