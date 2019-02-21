@@ -52,12 +52,6 @@ class UserInterface(Tk):
         return entry
 
     def set_up(self):
-        # text_to_input = ['NOTE:',
-        #                  'Remember to copy your column titles exactly as they are in excel',
-        #                  ' ']
-        #
-        # for note in text_to_input:
-        #     self.text(note)
 
         self.file_path = self.input_box("File Path (Path of file to input)")
         self.sheet_name = self.input_box("Sheet Name (If applicable specify the excel sheet)")
