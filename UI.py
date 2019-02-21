@@ -52,12 +52,6 @@ class UserInterface(Tk):
         return entry
 
     def set_up(self):
-        # text_to_input = ['NOTE:',
-        #                  'Remember to copy your column titles exactly as they are in excel',
-        #                  ' ']
-        #
-        # for note in text_to_input:
-        #     self.text(note)
 
         self.file_path = self.input_box("File Path (Path of file to input)")
         self.sheet_name = self.input_box("Sheet Name (If applicable specify the excel sheet)")
@@ -78,9 +72,6 @@ class UserInterface(Tk):
             # self.text("{0}.".format(count) + " " + num)
             count += 1
         self.text(input_text, scroll=True)
-        # self.text("pick the column title that represents each variable below")
-        # self.text("Input the numbered position (for example if you want the column title in the "
-        #           "first position, input 1)")
         self.text(" ")
 
         self.col_date = self.input_box("Date")

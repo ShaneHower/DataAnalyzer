@@ -47,10 +47,10 @@ class DataAnalyzer:
 
     def find_descr(self, col_date, col_acct, col_part, col_price, col_extpr):
         # determine column titles
-        # col_date = self.header[int(col_date) - 1]
-        # col_acct = self.header[int(col_acct) - 1]
-        # col_part = self.header[int(col_part) - 1]
-        # col_price = self.header[int(col_price) - 1]
+        col_date = self.header[int(col_date) - 1]
+        col_acct = self.header[int(col_acct) - 1]
+        col_part = self.header[int(col_part) - 1]
+        col_price = self.header[int(col_price) - 1]
         # col_extpr = self.header[int(col_extpr) - 1]
 
         # needs to happen because the indices must be in order when I filter them later
@@ -72,7 +72,7 @@ class DataAnalyzer:
             for num in part_numbers:
                 print "part num: {0}".format(num)
                 df4 = df3[df3[col_part] == num]
-                df4 = df4[df4[col_extpr] > 0]
+                # df4 = df4[df4[col_extpr] > 0]
                 df4["Var with Min"] = df4[col_price] - df4[col_price].min()
                 df4["Deviation"] = df4[col_price] - df4[col_price].mean()
                 df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
