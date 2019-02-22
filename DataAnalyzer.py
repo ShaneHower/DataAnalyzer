@@ -36,7 +36,7 @@ class DataAnalyzer:
 
         # grab data
         self.df = pd.read_excel(r"{0}".format(path), sheet_name=sheet)
-        print "got file: {0}".format(path)
+        print("file received: {0}".format(path))
 
     def find_descr(self):
         # needs to happen because the indices must be in order when I filter them later
@@ -47,7 +47,7 @@ class DataAnalyzer:
 
         # make an empty DF to keep appending filtered data
         df_to_upload = pd.DataFrame()
-        print "entering loop"
+        print("entering loop")
 
         # iterate through acct numbers, for each acct number iterate through the part numbers and filter by that part
         for acct in acct_num:
@@ -55,6 +55,7 @@ class DataAnalyzer:
             # grab the list of unique part numbers per acct number to filter through
             part_numbers = list(df3[self.col_part].unique())
             for num in part_numbers:
+                print("part number: {0}".format(num))
                 df4 = df3[df3[self.col_part] == num]
                 df4 = df4[df4[self.col_extpr] > 0]
                 df4["Var with Min"] = df4[self.col_price] - df4[self.col_price].min()
@@ -69,22 +70,20 @@ class DataAnalyzer:
                 df_index_finder = df4[df4["Var with Min"] != 0]
                 # df_index_finder = df4[df4["Z Score"] > 1]
                 indices = df_index_finder.index.values.tolist()
-                print "unclean indices: {0}".format(indices)
-                print "len of index: {0}".format(len(df4.index))
+                print("unclean indices: {0}".format(indices))
                 # takes out the max if goes over count has to happen here because it may return an empty list
                 if (indices != []) and (max(indices) >= len(df4.index) - 1):
                     inst = ListAnalyzer(indices)
                     indices = inst.delete_max()
+                print("clean indices: {0}".format(indices))
 
-                    # this may or may not have fixed the low-high pulls
+                # filters out low-high pricing
                 if indices != []:
                     # Grouped indices by sequences then iterate through this list to grab the correct rows
                     indices_grouped = ListAnalyzer(indices).find_sequence()
 
                     for seq_list in indices_grouped:
-                        print "seq_list: {0}".format(seq_list)
-                        print "min: {0}".format(min(seq_list))
-                        print "max:{0}".format(max(seq_list))
+                        print("seq_list: {0}".format(seq_list))
                         if min(seq_list) != 0:
                             df5 = df4.iloc[min(seq_list) - 1: max(seq_list) + 2]
                             df5.set_value(min(seq_list) - 1, "Var with Min", 0)
