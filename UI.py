@@ -38,15 +38,13 @@ class UserInterface(Tk):
         descr = Label(self, textvariable=text)
         text.set(label)
 
-        # descr.grid(row=0, column=0, pady=5)
         descr.pack(fill=X, padx=5)
 
         if password:
             entry = Entry(self, width=13, show="*")
         else:
             entry = Entry(self, width=13)
-
-        # entry.grid(row=0, column=2, padx=10, pady=3)
+            
         entry.pack(fill=X, padx=5, pady=10, expand=True)
 
         return entry
@@ -58,7 +56,6 @@ class UserInterface(Tk):
         self.op_file_name = self.input_box("Save Directory (Path where you want to save the file)")
 
         self.button_next = Button(self, text="Next", command=self.on_next)
-        self.button_next.grid(row=0, column=1)
         self.button_next.pack(side=RIGHT)
 
     def set_up2(self, header):
