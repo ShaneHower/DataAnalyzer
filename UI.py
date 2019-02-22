@@ -56,7 +56,6 @@ class UserInterface(Tk):
         self.op_file_name = self.input_box("Save Directory (Path where you want to save the file)")
 
         self.button_next = Button(self, text="Next", command=self.on_next)
-        self.button_next.grid(row=0, column=1)
         self.button_next.pack(side=RIGHT)
 
     def set_up2(self, header):
