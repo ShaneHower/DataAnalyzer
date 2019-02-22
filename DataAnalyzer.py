@@ -61,7 +61,7 @@ class DataAnalyzer:
 
         # make an empty DF to keep appending filtered data
         df_to_upload = pd.DataFrame()
-        print "entering loop"
+        print("entering loop")
 
         # iterate through acct numbers, for each acct number iterate through the part numbers and filter by that part
         for acct in acct_num:
