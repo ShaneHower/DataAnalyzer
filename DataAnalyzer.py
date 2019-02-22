@@ -65,12 +65,12 @@ class DataAnalyzer:
 
         # iterate through acct numbers, for each acct number iterate through the part numbers and filter by that part
         for acct in acct_num:
-            print "ACCT: {0}".format(acct)
+            print("ACCT: {0}".format(acct))
             df3 = df2[df2[col_acct] == acct]
             # grab the list of unique part numbers per acct number to filter through
             part_numbers = list(df3[col_part].unique())
             for num in part_numbers:
-                print "part num: {0}".format(num)
+                print("part num: {0}".format(num))
                 df4 = df3[df3[col_part] == num]
                 df4 = df4[df4[col_extpr] > 0]
                 df4["Var with Min"] = df4[col_price] - df4[col_price].min()
