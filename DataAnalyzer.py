@@ -35,7 +35,7 @@ class DataAnalyzer:
             self.df = pd.read_excel(path)
         else:
             self.df = pd.read_excel(path, sheet_name=sheet)
-        print "got file: {0}".format(path)
+        print("got file: {0}".format(path))
 
     def read_col_titles(self):
         self.header = list(self.df)
@@ -51,7 +51,7 @@ class DataAnalyzer:
         col_acct = self.header[int(col_acct) - 1]
         col_part = self.header[int(col_part) - 1]
         col_price = self.header[int(col_price) - 1]
-        # col_extpr = self.header[int(col_extpr) - 1]
+        col_extpr = self.header[int(col_extpr) - 1]
 
         # needs to happen because the indices must be in order when I filter them later
         df2 = self.df.sort_values(by=[col_date], ascending=True)
@@ -72,7 +72,7 @@ class DataAnalyzer:
             for num in part_numbers:
                 print "part num: {0}".format(num)
                 df4 = df3[df3[col_part] == num]
-                # df4 = df4[df4[col_extpr] > 0]
+                df4 = df4[df4[col_extpr] > 0]
                 df4["Var with Min"] = df4[col_price] - df4[col_price].min()
                 df4["Deviation"] = df4[col_price] - df4[col_price].mean()
                 df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
@@ -85,25 +85,21 @@ class DataAnalyzer:
                 df_index_finder = df4[df4["Var with Min"] != 0]
                 # df_index_finder = df4[df4["Z Score"] > 1]
                 indices = df_index_finder.index.values.tolist()
-                print "Len of index: {0}".format(len(indices))
-                # print "unclean indices: {0}".format(indices)
-                # print "len of index: {0}".format(len(df4.index))
+                print("unclean indices: {0}".format(indices))
                 # takes out the max if goes over count has to happen here because it may return an empty list
                 if (indices != []) and (max(indices) >= len(df4.index) - 1):
-                    print "Maximum present"
+                    print("Maximum present")
                     inst = ListAnalyzer(indices)
                     indices = inst.delete_max()
-                    print "index after deleting the max: {0}".format(len(indices))
+                print("cleaned indices: {0}".format(len(indices)))
 
-                    # this may or may not have fixed the low-high pulls
+                # this may or may not have fixed the low-high pulls
                 if indices != []:
                     # Grouped indices by sequences then iterate through this list to grab the correct rows
                     indices_grouped = ListAnalyzer(indices).find_sequence()
 
                     for seq_list in indices_grouped:
-                        # print "seq_list: {0}".format(seq_list)
-                        # print "min: {0}".format(min(seq_list))
-                        # print "max:{0}".format(max(seq_list))
+                        print("seq_list: {0}".format(seq_list))
                         if min(seq_list) != 0:
                             df5 = df4.iloc[min(seq_list) - 1: max(seq_list) + 2]
                             df5.set_value(min(seq_list) - 1, "Var with Min", 0)
