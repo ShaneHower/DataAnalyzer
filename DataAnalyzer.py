@@ -8,8 +8,10 @@ from ListAnalyzer import ListAnalyzer
     - then finds all variances with minimum charged for each part
     - filters and isolates those indices
     - determines if the max is included (this would suggest that it is a price increase, we don't want these)
-    - if max is there, first checks if it has a consecutive sequence before it (it will take out the whole sequence if this is the case
-    - it then splits the remainder of the list of indices into groups of consecutive sequences (in order to isolate those rows)
+    - if max is there, first checks if it has a consecutive sequence before it (it will take out the whole sequence if 
+      this is the case
+    - it then splits the remainder of the list of indices into groups of consecutive sequences (in order to isolate 
+      those rows)
     - it iterates through this new list of lists of indices and grabs the row before the min and after the max to dump 
       into the new excel sheet
     - deletes duplicates based on index 
@@ -70,16 +72,16 @@ class DataAnalyzer:
 
         # make an empty DF to keep appending filtered data
         df_to_upload = pd.DataFrame()
-        print "entering loop"
+        print("entering loop")
 
         # iterate through acct numbers, for each acct number iterate through the part numbers and filter by that part
         for acct in acct_num:
-            print "ACCT: {0}".format(acct)
+            print("ACCT: {0}".format(acct))
             df3 = df2[df2[col_acct] == acct]
             # grab the list of unique part numbers per acct number to filter through
             part_numbers = list(df3[col_part].unique())
             for num in part_numbers:
-                print "part num: {0}".format(num)
+                print("part num: {0}".format(num))
                 df4 = df3[df3[col_part] == num]
 
                 uom = list(df4[col_uom].unique())
