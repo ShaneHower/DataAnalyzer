@@ -72,7 +72,6 @@ class DataAnalyzer:
             for num in part_numbers:
                 print "part num: {0}".format(num)
                 df4 = df3[df3[col_part] == num]
-                df4 = df4[df4[col_extpr] > 0]
                 df4["Var with Min"] = df4[col_price] - df4[col_price].min()
                 df4["Deviation"] = df4[col_price] - df4[col_price].mean()
                 df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
@@ -83,7 +82,6 @@ class DataAnalyzer:
                 # filtering the non zero var so I can pull their indices and dump them in a list
                 #  which allows me to pull min and max for iloc filtering
                 df_index_finder = df4[df4["Var with Min"] != 0]
-                # df_index_finder = df4[df4["Z Score"] > 1]
                 indices = df_index_finder.index.values.tolist()
                 print("unclean indices: {0}".format(indices))
                 # takes out the max if goes over count has to happen here because it may return an empty list
@@ -111,10 +109,5 @@ class DataAnalyzer:
                         df_to_upload = df_to_upload.append(df5)
 
         # sort all of this stuff so user doesn't have to should be done before saving this is redundant
-        # df_to_upload = df_to_upload.sort_values(by=[self.col_acct, self.col_part, self.col_date], ascending=True)
         df_to_upload.to_excel(self.writer, "Sheet1")
         self.writer.save()
-
-
-# inst = DataAnalyzer("Guthrie_Cardinal", "C:\Users\Shane_Programming\Documents\Guthrie\Cardinal\Invoice History\Guthrie_Cardinal12MthSalesCondensed.xlsx", "Sales & Invoices Access")
-# print inst.find_descr("BillingDocDate", "ShipToCustomer", "MaterialNumber", "UnitPrice", "ExtendedSalesPrice")

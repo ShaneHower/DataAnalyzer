@@ -67,9 +67,8 @@ class UserInterface(Tk):
         input_text = ""
         for title in header:
 
-            new_txt = "{0}.".format(count)+ " " + title + "\n"
+            new_txt = "{0}.".format(count) + " " + title + "\n"
             input_text = input_text + new_txt
-            # self.text("{0}.".format(count) + " " + num)
             count += 1
         self.text(input_text, scroll=True)
         self.text(" ")
