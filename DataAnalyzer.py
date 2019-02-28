@@ -37,6 +37,9 @@ class DataAnalyzer:
             self.df = pd.read_excel(path, sheet_name=sheet)
         print("got file: {0}".format(path))
 
+    def prep_data(self, col):
+        self.df[col] = self.df[col].fillna('None')
+
     def read_col_titles(self):
         self.header = list(self.df)
         header = []
@@ -45,16 +48,22 @@ class DataAnalyzer:
 
         return header
 
-    def find_descr(self, col_date, col_acct, col_part, col_price, col_extpr):
+    def find_descr(self, col_date, col_acct, col_part, col_price, col_uom, col_extpr):
         # determine column titles
         col_date = self.header[int(col_date) - 1]
         col_acct = self.header[int(col_acct) - 1]
         col_part = self.header[int(col_part) - 1]
         col_price = self.header[int(col_price) - 1]
+        col_uom = self.header[int(col_uom) - 1]
         col_extpr = self.header[int(col_extpr) - 1]
+
+        # clean nulls
+        self.prep_data(col_acct)
+        self.prep_data(col_part)
 
         # needs to happen because the indices must be in order when I filter them later
         df2 = self.df.sort_values(by=[col_date], ascending=True)
+        df2 = df2[df2[col_extpr] > 0]
 
         # get list of all part numbers and cycle through it
         acct_num = list(self.df[col_acct].unique())
@@ -72,42 +81,47 @@ class DataAnalyzer:
             for num in part_numbers:
                 print "part num: {0}".format(num)
                 df4 = df3[df3[col_part] == num]
-                df4["Var with Min"] = df4[col_price] - df4[col_price].min()
-                df4["Deviation"] = df4[col_price] - df4[col_price].mean()
-                df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
 
-                # need to reset index because this is the way I'm going to grab the range of values I need
-                df4 = df4.reset_index()
+                uom = list(df4[col_uom].unique())
+                for unit in uom:
+                    df4 = df4[df4[col_uom] == unit]
+                    df4["Var with Min"] = df4[col_price] - df4[col_price].min()
+                    df4["Deviation"] = df4[col_price] - df4[col_price].mean()
+                    df4["Z Score"] = df4["Deviation"] / df4[col_price].std()
 
-                # filtering the non zero var so I can pull their indices and dump them in a list
-                #  which allows me to pull min and max for iloc filtering
-                df_index_finder = df4[df4["Var with Min"] != 0]
-                indices = df_index_finder.index.values.tolist()
-                print("unclean indices: {0}".format(indices))
-                # takes out the max if goes over count has to happen here because it may return an empty list
-                if (indices != []) and (max(indices) >= len(df4.index) - 1):
-                    print("Maximum present")
-                    inst = ListAnalyzer(indices)
-                    indices = inst.delete_max()
-                print("cleaned indices: {0}".format(len(indices)))
+                    # need to reset index because this is the way I'm going to grab the range of values I need
+                    df4 = df4.reset_index()
 
-                # this may or may not have fixed the low-high pulls
-                if indices != []:
-                    # Grouped indices by sequences then iterate through this list to grab the correct rows
-                    indices_grouped = ListAnalyzer(indices).find_sequence()
+                    # filtering the non zero var so I can pull their indices and dump them in a list
+                    #  which allows me to pull min and max for iloc filtering
+                    df_index_finder = df4[df4["Var with Min"] != 0]
+                    indices = df_index_finder.index.values.tolist()
+                    print("unclean indices: {0}".format(indices))
+                    # takes out the max if goes over count has to happen here because it may return an empty list
+                    if (indices != []) and (max(indices) >= len(df4.index) - 1):
+                        print("Maximum present")
+                        inst = ListAnalyzer(indices)
+                        indices = inst.delete_max()
+                    print("cleaned indices: {0}".format(len(indices)))
 
-                    for seq_list in indices_grouped:
-                        print("seq_list: {0}".format(seq_list))
-                        if min(seq_list) != 0:
-                            df5 = df4.iloc[min(seq_list) - 1: max(seq_list) + 2]
-                            df5.set_value(min(seq_list) - 1, "Var with Min", 0)
-                            df5.set_value(max(seq_list) + 1, "Var with Min", 0)
-                        else:
-                            df5 = df4.iloc[min(seq_list): max(seq_list) + 2]
-                            df5.set_value(max(seq_list) + 1, "Var with Min", 0)
-                        df5 = df5.drop_duplicates(subset=["index"], keep=False)
-                        df_to_upload = df_to_upload.append(df5)
+                    # this may or may not have fixed the low-high pulls
+                    if indices != []:
+                        # Grouped indices by sequences then iterate through this list to grab the correct rows
+                        indices_grouped = ListAnalyzer(indices).find_sequence()
+
+                        for seq_list in indices_grouped:
+                            print("seq_list: {0}".format(seq_list))
+                            if min(seq_list) != 0:
+                                df5 = df4.iloc[min(seq_list) - 1: max(seq_list) + 2]
+                                df5.set_value(min(seq_list) - 1, "Var with Min", 0)
+                                df5.set_value(max(seq_list) + 1, "Var with Min", 0)
+                            else:
+                                df5 = df4.iloc[min(seq_list): max(seq_list) + 2]
+                                df5.set_value(max(seq_list) + 1, "Var with Min", 0)
+                            df5 = df5.drop_duplicates(subset=["index"], keep=False)
+                            df_to_upload = df_to_upload.append(df5)
 
         # sort all of this stuff so user doesn't have to should be done before saving this is redundant
         df_to_upload.to_excel(self.writer, "Sheet1")
+        self.df.to_excel(self.writer, "Raw Data")
         self.writer.save()

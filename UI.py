@@ -77,6 +77,7 @@ class UserInterface(Tk):
         self.col_acct = self.input_box("Account Number")
         self.col_part = self.input_box("Item Number")
         self.col_price = self.input_box("Unit Price")
+        self.col_uom = self.input_box("Unit of Measure")
         self.col_extprice = self.input_box("Extended Price")
 
 
@@ -90,7 +91,8 @@ class UserInterface(Tk):
         self.button_next.destroy()
 
     def on_enter(self):
-        self.inst.find_descr(self.col_date.get(), self.col_acct.get(), self.col_part.get(), self.col_price.get(), self.col_extprice.get())
+        self.inst.find_descr(self.col_date.get(), self.col_acct.get(), self.col_part.get(), self.col_price.get(),
+                             self.col_uom.get(), self.col_extprice.get())
         self.destroy()
 
     def run(self):

@@ -1,6 +1,6 @@
-import os
+# import os
 from DataAnalyzer import DataAnalyzer
-from SheetGenerator import SheetGenerator
+from Tests.SheetGenerator import SheetGenerator
 
 # generate the sheets in the test directory
 instance = SheetGenerator()
